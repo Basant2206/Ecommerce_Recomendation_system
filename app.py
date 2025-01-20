@@ -42,7 +42,7 @@ def index():
     return render_template('index.html',trending_products=trending_products.head(8),truncate=truncate
                            )
 
-@app.route('/main')
+@app.route('/main',)
 def main():
     return render_template('main.html')
 
@@ -51,7 +51,7 @@ def toindex():
     return render_template('index.html')
 
 @app.route('/recommendations', methods=['POST', 'GET'])
-def recommendations():
+def recommendations(rec=None, truncate=None):
     if request.method == 'POST':
         prod=request.form.get('prod')
         nbr=request.form.get('nbr')
@@ -59,10 +59,12 @@ def recommendations():
         content_based_rec=content_based_recommendation(final_data,prod,nbr)
 
         if content_based_rec.empty:
+            print("hch")
             message = "No recommendations available for this product."
             return render_template('main.html', message=message)
         else:
-           return render_template('main.html', content_based_rec=content_based_rec, truncate=truncate)
+            print(999)
+            return render_template('main.html', content_based_rec=content_based_rec, truncate=truncate)
 
 
 if __name__ == '__main__':
